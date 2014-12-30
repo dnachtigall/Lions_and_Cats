@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var breedLabel: UILabel!
+    @IBOutlet weak var randomFactLabel: UILabel!
     
     var myTigers:[Tiger] = []
     
@@ -30,12 +31,17 @@ class ViewController: UIViewController {
         myTiger.age = 3
         myTiger.image = UIImage(named: "BengalTiger.jpg")
         
-        myTigers.append(myTiger)
+        myTiger.age = myTiger.ageInTigerYearsFromAge(myTiger.age)
         
-        myImageView.image = myTiger.image
-        nameLabel.text = myTiger.name
-        ageLabel.text = "\(myTiger.age)"
-        breedLabel.text = myTiger.breed
+        myTiger.chuff()
+        
+        self.myTigers.append(myTiger)
+        
+        self.myImageView.image = myTiger.image
+        self.nameLabel.text = myTiger.name
+        self.ageLabel.text = "\(myTiger.age)"
+        self.breedLabel.text = myTiger.breed
+        self.randomFactLabel.text = myTiger.randomFact()
         
         var secondTiger = Tiger()
         secondTiger.name = "Tigress"
@@ -43,7 +49,9 @@ class ViewController: UIViewController {
         secondTiger.age = 2
         secondTiger.image = UIImage(named: "IndochineseTiger.jpg")
         
+        secondTiger.age = secondTiger.ageInTigerYearsFromAge(secondTiger.age)
         
+        secondTiger.chuff()
         
         var thirdTiger = Tiger()
         thirdTiger.name = "Jacob"
@@ -51,13 +59,23 @@ class ViewController: UIViewController {
         thirdTiger.breed = "Malayan Tiger"
         thirdTiger.image = UIImage(named: "MalayanTiger.jpg")
         
+        thirdTiger.age = thirdTiger.ageInTigerYearsFromAge(thirdTiger.age)
+        
         var fourthTiger = Tiger()
         fourthTiger.name = "Spar"
         fourthTiger.breed = "Siberian Tiger"
         fourthTiger.age = 5
         fourthTiger.image = UIImage(named: "SiberianTiger.jpg")
         
-        myTigers += [secondTiger, thirdTiger, fourthTiger]
+        fourthTiger.age = fourthTiger.ageInTigerYearsFromAge(fourthTiger.age)
+        
+        self.myTigers += [secondTiger, thirdTiger, fourthTiger]
+        
+        
+        myTiger.chuffANumberOfTimes(3)
+        secondTiger.chuffANumberOfTimes(2)
+        
+        myTiger.chuffANumberOfTimes(5, isLoud: true)
         
     }
 
@@ -68,16 +86,17 @@ class ViewController: UIViewController {
 
     @IBAction func nextBarButtonItemPressed(sender: UIBarButtonItem) {
         
+        
         var randomIndex:Int
         
         do {
-            randomIndex = Int(arc4random_uniform(UInt32(myTigers.count)))
+            randomIndex = Int(arc4random_uniform(UInt32(self.myTigers.count)))
         }
-        while currentIndex == randomIndex
+        while self.currentIndex == randomIndex
   
-        currentIndex = randomIndex
+        self.currentIndex = randomIndex
         
-        let tiger = myTigers[randomIndex]
+        let tiger = self.myTigers[randomIndex]
 
         
         
@@ -87,15 +106,15 @@ class ViewController: UIViewController {
             self.nameLabel.text = tiger.name
             self.ageLabel.text = "\(tiger.age)"
             self.breedLabel.text = tiger.breed
+            self.randomFactLabel.text = tiger.randomFact()
             
             }, completion: {
                 (finished: Bool) -> () in
-        })
+                            })
     
-        
-        
-        
-    }
+        }
+    
 
+   
 }
 
